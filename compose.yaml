@@ -6,4 +6,7 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - .:/code/src:ro
+      - .:/code
+
+volumes:
+  frontend:

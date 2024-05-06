@@ -1,5 +1,11 @@
-import styles from "./page.module.css";
+import Graph from "./components/graph";
+import Prefectures from "./components/prefectures";
 
-export default function Home() {
-  return <><div>aaa</div></>;
+export default function Page() {
+  return (
+    <>
+      <Prefectures />
+      <Graph />
+    </>
+  );
 }

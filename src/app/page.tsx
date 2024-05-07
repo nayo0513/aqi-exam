@@ -35,9 +35,6 @@ export default function Page() {
       });
     })();
   }, []);
-  setTimeout(() => {
-    console.log(prefecturesWithPopulation);
-  }, 1000);
 
   return (
     <>
@@ -48,7 +45,10 @@ export default function Page() {
           switchSelectedPrefecture(setSelectedPrefectures, index)
         }
       />
-      <Chart prefecturesWithPopulation={prefecturesWithPopulation} />
+      <Chart
+        prefecturesWithPopulation={prefecturesWithPopulation}
+        selectedPrefectures={selectedPrefectures}
+      />
     </>
   );
 }

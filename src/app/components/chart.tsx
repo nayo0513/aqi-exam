@@ -3,25 +3,47 @@
 import Highcharts from "highcharts/highstock";
 import HighchartsReact from "highcharts-react-official";
 import { PrefectureWithPopulation } from "@/app/types";
+import { useMemo } from "react";
 
 export default function Chart(props: {
   prefecturesWithPopulation: PrefectureWithPopulation[];
+  selectedPrefectures: boolean[];
 }) {
   const options = {
     title: {
       text: "総人口推移グラフ",
     },
-    series: [
-      {
-        data: [1, 2, 3],
+    xAsis: {
+      title: {
+        text: "年度",
       },
-      { data: [2, 3] },
-    ],
+      crosshair: true,
+    },
+    yAxis: {
+      title: {
+        text: "人口数",
+      },
+    },
   };
+
+  const series = useMemo(() => {
+    return props.prefecturesWithPopulation
+      .map((prefecture, i) => {
+        if (!props.selectedPrefectures[i]) return null;
+        return {
+          name: prefecture.prefName,
+          data: prefecture.population.map((p) => [p.year, p.value]),
+        };
+      })
+      .filter((s) => s !== null);
+  }, [props.prefecturesWithPopulation, props.selectedPrefectures]);
 
   return (
     <>
-      <HighchartsReact highcharts={Highcharts} options={options} />
+      <HighchartsReact
+        highcharts={Highcharts}
+        options={{ ...options, series }}
+      />
     </>
   );
 }
